@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>AR Rocket Builder</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-three.prod.js"></script>
+</head>
+
+<body>
+  <!-- Loading / Start Screen -->
+  <div id="loading">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p id="loading-text">Ready to Build?</p>
+      <button id="btn-start-ar" class="btn-launch" style="margin-top: 1rem;">START AR</button>
+      <p style="font-size: 0.75rem; opacity: 0.7; margin-top: 0.5rem;">Camera permission & marker required</p>
+    </div>
+  </div>
+
+  <!-- MindAR Three container -->
+  <div id="canvas-container"></div>
+
+  <!-- UI Overlay -->
+  <div id="xr-overlay" style="display:none;">
+    <div id="step-bar">
+      <div class="step active" data-step="place"><span class="step-num">1</span> Place</div>
+      <div class="step-line"></div>
+      <div class="step" data-step="build"><span class="step-num">2</span> Build</div>
+      <div class="step-line"></div>
+      <div class="step" data-step="launch"><span class="step-num">3</span> Launch</div>
+    </div>
+
+    <div id="hint" class="hint-visible">
+      <p id="hint-text">Scanning for target image...</p>
+    </div>
+
+    <div id="bottom-sheet" class="sheet-hidden">
+      <div class="sheet-handle" id="sheet-handle">
+        <div class="handle-bar"></div>
+      </div>
+
+      <div class="sheet-peek">
+        <div class="peek-stat">
+          <span class="peek-label">Height</span>
+          <span class="peek-value" id="r-maxheight">0 m</span>
+        </div>
+        <div class="peek-stat">
+          <span class="peek-label">Time</span>
+          <span class="peek-value" id="r-flighttime">0 s</span>
+        </div>
+        <div class="peek-stat peek-status">
+          <span class="peek-label">Status</span>
+          <span class="peek-value" id="r-status">--</span>
+        </div>
+      </div>
+
+      <div class="sheet-body" id="sheet-body">
+        <div class="slider-row">
+          <div class="slider-label">
+            <span>Thrust</span>
+            <span class="slider-val" id="v-thrust">20.0 N</span>
+          </div>
+          <input type="range" id="p-thrust" min="1" max="100" step="0.5" value="20" />
+        </div>
+        <div class="slider-row">
+          <div class="slider-label">
+            <span>Mass</span>
+            <span class="slider-val" id="v-mass">0.50 kg</span>
+          </div>
+          <input type="range" id="p-mass" min="0.1" max="5.0" step="0.05" value="0.5" />
+        </div>
+        <div class="slider-row">
+          <div class="slider-label">
+            <span>Burn Time</span>
+            <span class="slider-val" id="v-burntime">3.0 s</span>
+          </div>
+          <input type="range" id="p-burntime" min="0.5" max="10.0" step="0.1" value="3.0" />
+        </div>
+      </div>
+
+      <div class="sheet-actions">
+        <button id="btn-launch" class="btn-launch disabled" disabled>LAUNCH</button>
+        <button id="btn-reset" class="btn-reset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
